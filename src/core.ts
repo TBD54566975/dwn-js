@@ -5,7 +5,10 @@ import Router from 'koa-router';
 import cors from '@koa/cors';
 import getRawBody from 'raw-body';
 
+console.log(`Instantiating DWN...`);
 const dwn = await DWN.create({ });
+
+console.log(`Instantiating koa...`);
 const app = new Koa();
 
 // allow CORS, MUST be the first middleware
@@ -17,6 +20,7 @@ app.use(async (ctx, next) => {
   await next();
 });
 
+console.log(`Setting up routes...`);
 const router = new Router();
 router.post('/', async (ctx, _next) => {
   const response = await dwn.processRequest(ctx.body);
