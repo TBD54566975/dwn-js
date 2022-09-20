@@ -1,0 +1,52 @@
+{
+  "name": "@tbd54566975/dwn-js",
+  "version": "0.0.1",
+  "description": "A nodejs DWN using https://github.com/TBD54566975/dwn-sdk-js",
+  "repository": "https://github.com/TBD54566975/dwn-js",
+  "license": "Apache-2.0",
+  "main": "dist/core.js",
+  "type": "module",
+  "dependencies": {
+    "@koa/cors": "3.4.1",
+    "@tbd54566975/dwn-sdk-js": "0.0.1",
+    "koa": "2.13.4",
+    "koa-router": "12.0.0",
+    "raw-body": "2.5.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa__cors": "^3.3.0",
+    "@types/koa-router": "^7.4.4",
+    "@types/node": "^18.7.18",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "copyfiles": "^2.2.0",
+    "eslint": "^7.10.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-arrow": "^1.2.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --ext ts src/ tests/ --fix",
+    "start": "node --es-module-specifier-resolution=node dist/core.js"
+  },
+  "nyc": {
+    "all": true,
+    "extension": [
+      ".js"
+    ],
+    "include": [
+      "dist/src/**"
+    ],
+    "reporter": [
+      "text",
+      "cobertura",
+      "html"
+    ]
+  }
+}
