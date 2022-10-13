@@ -5,7 +5,8 @@ WORKDIR /dwn
 COPY package.json tsconfig.json ./
 COPY src ./src
 
-# DWN's levelDB has issues running on m1, so we have to install prerequisites
+# DWN's levelDB has issues running on m1, so we have to install prerequisites and build node deps
+# from source
 RUN apk add --update python3 make g++
 RUN npm install --build-from-source
 RUN npm run build
