@@ -1,4 +1,4 @@
-import { DWN } from '@TBD54566975/dwn-sdk-js';
+import { Dwn } from '@TBD54566975/dwn-sdk-js';
 import Koa from 'koa';
 import { Response } from '@tbd54566975/dwn-sdk-js/dist/esm/src/core';
 import Router from 'koa-router';
@@ -6,7 +6,7 @@ import cors from '@koa/cors';
 import getRawBody from 'raw-body';
 
 console.log(`Instantiating DWN...`);
-const dwn = await DWN.create({ });
+const dwn = await Dwn.create({ });
 
 console.log(`Instantiating koa...`);
 const app = new Koa();
