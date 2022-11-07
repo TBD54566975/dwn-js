@@ -1,6 +1,6 @@
-import { Dwn } from '@tbd54566975/dwn-sdk-js';
+
+import { Dwn, Response } from '@tbd54566975/dwn-sdk-js';
 import Koa from 'koa';
-import { Response } from '@tbd54566975/dwn-sdk-js/dist/esm/src/core';
 import Router from 'koa-router';
 import cors from '@koa/cors';
 import getRawBody from 'raw-body';
