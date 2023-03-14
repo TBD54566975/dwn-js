@@ -40,3 +40,5 @@ This repository contains a Node.js instantiation of a Decentralized Web Node (DW
 
 - profit? 💰 
   - DWN now accepts requests on port 3000
+
+

@@ -1,12 +1,12 @@
 
-import { Dwn, Response } from '@tbd54566975/dwn-sdk-js';
+import { Dwn, Encoder, MessageReply } from '@tbd54566975/dwn-sdk-js';
 import Koa from 'koa';
 import Router from 'koa-router';
 import cors from '@koa/cors';
-import getRawBody from 'raw-body';
+import { Readable } from 'readable-stream';
 
 console.log(`Instantiating DWN...`);
-const dwn = await Dwn.create({ });
+const dwn = await Dwn.create();
 
 console.log(`Instantiating koa...`);
 const app = new Koa();
@@ -14,17 +14,14 @@ const app = new Koa();
 // allow CORS, MUST be the first middleware
 app.use(cors());
 
-// Raw body parser.
-app.use(async (ctx, next) => {
-  ctx.body = await getRawBody(ctx.req);
-  await next();
-});
-
 console.log(`Setting up routes...`);
 const router = new Router();
-router.post('/', async (ctx, _next) => {
-  const response = await dwn.processRequest(ctx.body);
-  setKoaResponse(response, ctx.response);
+router.post('/:did', async (ctx, _next) => {
+  const did = ctx.params.did;
+  const dwnMessageHeader = ctx.headers['x-dwn-message'] as string;
+  const dwnMessage = Encoder.base64UrlToObject(dwnMessageHeader);
+  const messageReply = await dwn.processMessage(did, dwnMessage, ctx.req as unknown as Readable);
+  setKoaResponse(messageReply, ctx.response);
 });
 
 app.use(router.routes())
@@ -49,9 +46,9 @@ try {
 /**
  * Sets the koa response according to the DWN response object given.
  */
-const setKoaResponse = (response: Response, koaResponse: Koa.Response) => {
-  koaResponse.status = response.status ? response.status.code : 200;
+const setKoaResponse = (messageReply: MessageReply, koaResponse: Koa.Response) => {
+  koaResponse.status = messageReply.status.code;
 
   koaResponse.set('Content-Type', 'application/json');
-  koaResponse.body = JSON.stringify(response);
+  koaResponse.body = messageReply.entries ?? messageReply.status.detail;
 };
