@@ -18,7 +18,7 @@ console.log(`Setting up routes...`);
 const router = new Router();
 router.post('/:did', async (ctx, _next) => {
   const did = ctx.params.did;
-  const dwnMessageHeader = ctx.headers['x-dwn-message'] as string;
+  const dwnMessageHeader = ctx.headers['dwn-message'] as string;
   const dwnMessage = Encoder.base64UrlToObject(dwnMessageHeader);
   const messageReply = await dwn.processMessage(did, dwnMessage, ctx.req as unknown as Readable);
   setKoaResponse(messageReply, ctx.response);
